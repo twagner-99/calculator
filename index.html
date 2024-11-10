@@ -22,7 +22,7 @@
     <button id="x">x</button>
     <button id="/">/</button>
     <button id="=">=</button>
-    <button>clear</button>
+    <button>clear</button>      <!-- debating id="" --> 
 
 
     <script>
@@ -66,16 +66,17 @@
         }
 
         const buttons = document.querySelectorAll('button');
+        const display = document.querySelector('#display');
 
         buttons.forEach((btn) => {
             btn.addEventListener("click", (e) => {
                 let target = e.target.id;
-                console.log(target);
+                display.textContent = target;
             });
         });
 
 
-        const display = document.querySelector('#display');
+
 
 
         // display.textContent = 
