@@ -68,25 +68,42 @@
         const buttons = document.querySelectorAll('button');
         const display = document.querySelector('#display');
 
+        let userNums = []; // Lives outside of event listener otherwise it gets overwritten each click.
+
         buttons.forEach((btn) => {
             btn.addEventListener("click", (e) => {
                 let target = e.target.innerText;
                 display.textContent = target;
 
                 let targetType = e.target.id;
-                if (targetType === num) {
-                    
+
+
+                if (targetType === 'num') {
+                    // store all clicks in an array?
+                    // then change concat to not be rest param?
+                    userNums.push(target);
+                    console.log(userNums);
+                }
+
+                else if (targetType === operator) {
+
+                }
+
+                else {
+                    // operate function
                 }
             });
         });
 //////////////
-        function concatNum(...manyNums) {
-            return manyNums.reduce((finalNum, currentNum) => {
-                return finalNum + currentNum;
-            }, '');
-        };
+        // function concatNum(...manyNums) {
+        //     return manyNums.reduce((finalNum, currentNum) => {
+        //         return finalNum + currentNum;
+        //     }, '');
+        // };
 
-        console.log(concatNum('1', '2', '3'));
+        // // use join instead!!!
+
+        // console.log(concatNum('1', '2', '3'));
 
 
 
