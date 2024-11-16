@@ -7,22 +7,22 @@
 </head>
 <body>
     <div id="display">123</div>
-    <button id="0">0</button>
-    <button id="1">1</button>
-    <button id="2">2</button>
-    <button id="3">3</button>
-    <button id="4">4</button>
-    <button id="5">5</button>
-    <button id="6">6</button>
-    <button id="7">7</button>
-    <button id="8">8</button>
-    <button id="9">9</button>
-    <button id="+">+</button>
-    <button id="-">-</button>
-    <button id="x">x</button>
-    <button id="/">/</button>
-    <button id="=">=</button>
-    <button>clear</button>      <!-- debating id="" --> 
+    <button id="num">0</button>
+    <button id="num">1</button>
+    <button id="num">2</button>
+    <button id="num">3</button>
+    <button id="num">4</button>
+    <button id="num">5</button>
+    <button id="num">6</button>
+    <button id="num">7</button>
+    <button id="num">8</button>
+    <button id="num">9</button>
+    <button id="operator">+</button> <!-- or maybe add? -->
+    <button id="operator">-</button>
+    <button id="operator">x</button>
+    <button id="operator">/</button>
+    <button id="equal">=</button>
+    <button>clear</button>      <!-- debating id="". Need to fix so display doesnt say clear  --> 
 
 
     <script>
@@ -70,10 +70,24 @@
 
         buttons.forEach((btn) => {
             btn.addEventListener("click", (e) => {
-                let target = e.target.id;
+                let target = e.target.innerText;
                 display.textContent = target;
+
+                let targetType = e.target.id;
+                if (targetType === num) {
+                    
+                }
             });
         });
+//////////////
+        function concatNum(...manyNums) {
+            return manyNums.reduce((finalNum, currentNum) => {
+                return finalNum + currentNum;
+            }, '');
+        };
+
+        console.log(concatNum('1', '2', '3'));
+
 
 
 
@@ -85,13 +99,15 @@
 
 
 // If click a number, store it. 
-// If click another numbers, store it, and concat.
-    // Means will have to convert to string first
+// If click another numbers, store it, and concat. Use rest param??
+    // Already stored as string. After concat, store as num
 // If click operator, store it
     // If click another operator, override first?
         // Maybe have this be extended function, come back later
-// Then when click number again, store, string, concat again
+// Then when click number again, store, concat, conver to num again
 // When click =, run operate function
+
+// Do we need another function that store all values then runs operate within it?
     </script>
 </body>
 </html>
