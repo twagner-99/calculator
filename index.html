@@ -17,12 +17,12 @@
     <button id="num">7</button>
     <button id="num">8</button>
     <button id="num">9</button>
-    <button id="operator">+</button> <!-- or maybe add? -->
+    <button id="operator">+</button>
     <button id="operator">-</button>
     <button id="operator">x</button>
     <button id="operator">/</button>
     <button id="equal">=</button>
-    <button>clear</button>      <!-- debating id="". Need to fix so display doesnt say clear  --> 
+    <button id="clear">clear</button>
 
 
     <script>
@@ -72,39 +72,31 @@
         buttons.forEach((btn) => {
             btn.addEventListener("click", (e) => {
                 let target = e.target.innerText;
-                display.textContent = target;
-
                 let targetType = e.target.id;
 
-                // Should I make all the code below into switch statements? Might be cleaner.
+                switch (targetType) {
+                    case 'num':
+                        userNums.push(target);
+                        display.textContent = +userNums.join(''); // Display joined number as user clicks nums. Does not save into a variable yet, though. Do this during operator step. Otherwise we wouldn't be able to delineate between num1 creation and num2 creation.
+                        break;
+                    case 'operator':
+                        operator = e.target.innerText;
+                        display.textContent = operator;
+                        num1 = +userNums.join('');  // Notice it's num1 =, not let num1 =. We are overwriting its value so it can be seen everywhere. // Unary + converts num1 from string to number
+                        userNums = [];              // Make userNums empty array everywhere again.
+                        break;
+                    case 'equal':
+                        num2 = +userNums.join('');
+                        userNums = [];
 
-                if (targetType === 'num') {     // Store all num clicks in an array.
-                    userNums.push(target);
-                    console.log(userNums);
-                }
-
-                if (targetType === 'operator') {   // on operator click, store userNums joined together as num1 variable
-                    operator = e.target.innerText;
-                    console.log(operator);
-                    
-                    num1 = +userNums.join('');  // Unary + converts num1 from string to number
-                    console.log(num1);          // Notice it's num1 =, not let num1 =. We are overwriting its value so it can be seen everywhere.
-                    userNums = [];          // Need to understand consequences of this!!!
-                }
-
-                if (targetType === 'equal') {  // on equal click, store new userNums joined together as num2 variable
-                    num2 = +userNums.join('');
-                    console.log(num2);
-                    console.log(num1);
-                    console.log(operator);
-                    userNums = [];
-
-                    console.log(operate(num1, num2, operator));
-                }
-
-                // else {
-                //     // clear
-                // }
+                        display.textContent = operate(num1, num2, operator);
+                        break;
+                    case 'clear':
+                        num1 = 0;
+                        num2 = 0;
+                        display.textContent = '0';
+                        // Can add two numbers, but not three. Save final result in another num before outputing final result?
+                };
             });
         });
 
