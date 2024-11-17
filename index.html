@@ -42,11 +42,7 @@
             return num1 / num2;
         }
 
-        let num1 = 3;
-        let operator = '+';
-        let num2 = 5;
-
-        function operate(num1, operator, num2) {
+        function operate(num1, num2, operator) {
             switch(operator) {
                 case '+':
                     return add(num1, num2);
@@ -68,7 +64,10 @@
         const buttons = document.querySelectorAll('button');
         const display = document.querySelector('#display');
 
-        let userNums = []; // Lives outside of event listener otherwise it gets overwritten each click.
+        let userNums = []; // Initialization ives outside of event listener otherwise it gets overwritten each click.
+        let num1;
+        let num2;
+        let operator;
 
         buttons.forEach((btn) => {
             btn.addEventListener("click", (e) => {
@@ -77,42 +76,46 @@
 
                 let targetType = e.target.id;
 
+                // Should I make all the code below into switch statements? Might be cleaner.
 
-                if (targetType === 'num') {
-                    // store all clicks in an array?
-                    // then change concat to not be rest param?
+                if (targetType === 'num') {     // Store all num clicks in an array.
                     userNums.push(target);
                     console.log(userNums);
                 }
 
-                else if (targetType === operator) {
-
+                if (targetType === 'operator') {   // on operator click, store userNums joined together as num1 variable
+                    let operator = e.target.innerText;
+                    console.log(operator);
+                    
+                    let num1 = +userNums.join('');  // Unary + converts num1 from string to number
+                    console.log(num1);
+                    userNums = [];          // Need to understand consequences of this!!!
                 }
 
-                else {
-                    // operate function
+                if (targetType === 'equal') {  // on equal click, store new userNums joined together as num2 variable
+                    let num2 = +userNums.join('');
+                    console.log(num2);
+                    console.log(num1);
+                    console.log(operator);
+                    userNums = [];
+
+                    console.log(operate(num1, num2, operator)); // NUM1 NOT DEFINED!! Use function expression?
                 }
+
+                // else {
+                //     // clear
+                // }
             });
         });
-//////////////
-        // function concatNum(...manyNums) {
-        //     return manyNums.reduce((finalNum, currentNum) => {
-        //         return finalNum + currentNum;
-        //     }, '');
-        // };
-
-        // // use join instead!!!
-
-        // console.log(concatNum('1', '2', '3'));
-
-
-
 
 // Step 6
 // Need the program to know when numbers end and operator starts.
 // Perhaps add another id to the operators to distinguish from numbers?
 // And another to the numbers to distinguish from the operators?
 // What happens if they press operators in a row? Ignore somehow?
+// What if they start with operator instead of a number?
+        // Do nothing with an operator until a num1 is stored?
+        // if num1 === nullish, nothing?
 
 
 // If click a number, store it. 
