@@ -65,6 +65,7 @@
         const display = document.querySelector('#display');
 
         let userNums = []; // Initialization ives outside of event listener otherwise it gets overwritten each click.
+        let userNumsJoined = [];
         let num1;   // Creating variables for all of these then overwriting their values within the if statements so they can be seen anywhere in the code.
         let num2;
         let operator;
@@ -78,24 +79,59 @@
                     case 'num':
                         userNums.push(target);
                         display.textContent = +userNums.join(''); // Display joined number as user clicks nums. Does not save into a variable yet, though. Do this during operator step. Otherwise we wouldn't be able to delineate between num1 creation and num2 creation.
+                        num1 = +userNums.join('');  // Notice it's num1 =, not let num1 =. We are overwriting its value so it can be seen everywhere. // Unary + converts num1 from string to number
+                        console.log('num1 =' + num1);
                         break;
                     case 'operator':
                         operator = e.target.innerText;
                         display.textContent = operator;
-                        num1 = +userNums.join('');  // Notice it's num1 =, not let num1 =. We are overwriting its value so it can be seen everywhere. // Unary + converts num1 from string to number
+
+                        userNumsJoined.push(num1);
+                        console.log('userNumsJoined = ' + userNumsJoined);
+
+                        num2 = userNumsJoined.reduce((total, current) => {
+                            return total + current;
+                        });
+
+                        console.log('num2 = ' + num2);
+                        
+                        // rest params again? rewrite OG functions? then run operate
+                        // push num1 into tsomething and then into function that takes rest param?
+                        // ...num1 = something??
+
+                        // switch (target) {
+                        //     case '+':                            
+                        //         num2 = num1; // num2 = num2 + num1
+                        //         break;
+                        //     case '-':
+                        //         num2 -= num1; // num2 = num2 - num1
+                        //         break;
+                        //     case 'x':
+                        //         num2 *= num1; // num2 = num2 * num1
+                        //     case '/':
+                        //         num2 /= num1; // num2 = num2 / num1
+                        //         break;
+                        // }
+                        
+                        // console.log('num2 =' + num2);
                         userNums = [];              // Make userNums empty array everywhere again.
+
+                        
                         break;
                     case 'equal':
-                        num2 = +userNums.join('');
+                        // num2 = +userNums.join(''); // DELETE?
                         userNums = [];
 
                         display.textContent = operate(num1, num2, operator);
+
+                        console.log('num2 =' + num2);
                         break;
                     case 'clear':
                         num1 = 0;
                         num2 = 0;
                         display.textContent = '0';
                         // Can add two numbers, but not three. Save final result in another num before outputing final result?
+                        // This is because we never create num2
                 };
             });
         });
