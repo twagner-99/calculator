@@ -89,49 +89,38 @@
                         userNumsJoined.push(num1);
                         console.log('userNumsJoined = ' + userNumsJoined);
 
-                        num2 = userNumsJoined.reduce((total, current) => {
-                            return total + current;
+                        num2 = userNumsJoined.reduce((total, current) => {  // using reduce got around the issue of initializing a value for each operator when trying to use num2 =+ num1 (or =* or whatever, since they would require diff num2 starting values to work). the first value of reduce just defaults to the first thing in the array.
+                            switch (target) {
+                                case '+':                            
+                                    return total + current;
+                                    break;
+                                case '-':
+                                    return total - current;
+                                    break;
+                                case 'x':
+                                    return total * current;
+                                case '/':
+                                    return total / current;
+                                    break;
+                            }
                         });
 
-                        console.log('num2 = ' + num2);
-                        
-                        // rest params again? rewrite OG functions? then run operate
-                        // push num1 into tsomething and then into function that takes rest param?
-                        // ...num1 = something??
-
-                        // switch (target) {
-                        //     case '+':                            
-                        //         num2 = num1; // num2 = num2 + num1
-                        //         break;
-                        //     case '-':
-                        //         num2 -= num1; // num2 = num2 - num1
-                        //         break;
-                        //     case 'x':
-                        //         num2 *= num1; // num2 = num2 * num1
-                        //     case '/':
-                        //         num2 /= num1; // num2 = num2 / num1
-                        //         break;
-                        // }
-                        
-                        // console.log('num2 =' + num2);
+                        console.log('num2 after operator = ' + num2);
                         userNums = [];              // Make userNums empty array everywhere again.
-
-                        
                         break;
                     case 'equal':
-                        // num2 = +userNums.join(''); // DELETE?
                         userNums = [];
 
                         display.textContent = operate(num1, num2, operator);
 
-                        console.log('num2 =' + num2);
+                        console.log('num2 after equal =' + num2);
+                        console.log('final value = ' + operate(num1, num2, operator));
                         break;
                     case 'clear':
                         num1 = 0;
                         num2 = 0;
                         display.textContent = '0';
-                        // Can add two numbers, but not three. Save final result in another num before outputing final result?
-                        // This is because we never create num2
+                        // clear doesn't work right, don't want to initialize to 0
                 };
             });
         });
