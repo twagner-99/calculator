@@ -65,7 +65,7 @@
         const display = document.querySelector('#display');
 
         let userNums = []; // Initialization ives outside of event listener otherwise it gets overwritten each click.
-        let num1;
+        let num1;   // Creating variables for all of these then overwriting their values within the if statements so they can be seen anywhere in the code.
         let num2;
         let operator;
 
@@ -84,22 +84,22 @@
                 }
 
                 if (targetType === 'operator') {   // on operator click, store userNums joined together as num1 variable
-                    let operator = e.target.innerText;
+                    operator = e.target.innerText;
                     console.log(operator);
                     
-                    let num1 = +userNums.join('');  // Unary + converts num1 from string to number
-                    console.log(num1);
+                    num1 = +userNums.join('');  // Unary + converts num1 from string to number
+                    console.log(num1);          // Notice it's num1 =, not let num1 =. We are overwriting its value so it can be seen everywhere.
                     userNums = [];          // Need to understand consequences of this!!!
                 }
 
                 if (targetType === 'equal') {  // on equal click, store new userNums joined together as num2 variable
-                    let num2 = +userNums.join('');
+                    num2 = +userNums.join('');
                     console.log(num2);
                     console.log(num1);
                     console.log(operator);
                     userNums = [];
 
-                    console.log(operate(num1, num2, operator)); // NUM1 NOT DEFINED!! Use function expression?
+                    console.log(operate(num1, num2, operator));
                 }
 
                 // else {
