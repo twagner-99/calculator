@@ -17,6 +17,7 @@
     <button id="num">7</button>
     <button id="num">8</button>
     <button id="num">9</button>
+    <button id="num">.</button>
     <button id="operator">+</button>
     <button id="operator">-</button>
     <button id="operator">x</button>
@@ -83,7 +84,7 @@
                 switch (targetType) {
                     case 'num':
                         userNums.push(target);
-                        userInput = +userNums.join('');
+                        userInput = userNums.join('');
                         display.textContent = userInput;
                         break;
                     case 'operator':
@@ -91,7 +92,7 @@
                         operatorCount++;
 
                         if (operatorCount > 1) {
-                            num2 = userInput;
+                            num2 = +userInput;
                             let result = operate(num1, num2, operatorPrev);
                             display.textContent = result;
                             num1 = result;
@@ -99,24 +100,17 @@
                         }
 
                         else {
-                            num1 = userInput // Notice it's num1 =, not let num1 =. We are overwriting its value so it can be seen everywhere. // Unary + converts num1 from string to number
+                            num1 = +userInput // Notice it's num1 =, not let num1 =. We are overwriting its value so it can be seen everywhere. // Unary + converts num1 from string to number
                             display.textContent = num1;
                             operatorPrev = operator;
                         }
-
-                        console.log('num1 =' + num1);
-                        console.log('num2 =' + num2);
 
                         userNums = [];              // Make userNums empty array everywhere again.
                         break;
                     case 'equal': 
                         userNums = [];
-                        num2 = userInput;
-
+                        num2 = +userInput;
                         display.textContent = operate(num1, num2, operator);
-
-                        console.log('num2 after equal =' + num2);
-                        console.log('final value = ' + operate(num1, num2, operator));
                         break;
                     case 'clear':
                         num1 = 0;
