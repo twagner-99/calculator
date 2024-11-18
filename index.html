@@ -64,6 +64,8 @@
         const buttons = document.querySelectorAll('button');
         const display = document.querySelector('#display');
 
+        // I THINK HAVING ALL THESE GLOBAL VARIABLES IS BAD PRACTICE. TRY TO CLEAN THIS UP. I THINK THEY SHOULD LIVE WITHIN FUNCTIONS?
+
         let userNums = []; // Initialization ives outside of event listener otherwise it gets overwritten each click.
         let userNumsJoined = [];
         let num1;   // Creating variables for all of these then overwriting their values within the if statements so they can be seen anywhere in the code.
@@ -104,36 +106,12 @@
 
                         console.log('num1 =' + num1);
                         console.log('num2 =' + num2);
-                        // userNumsJoined.push(num1);
-                        // console.log('userNumsJoined = ' + userNumsJoined);
-
-                        // num2 = userNumsJoined.reduce((total, current) => {  // using reduce got around the issue of initializing a value for each operator when trying to use num2 =+ num1 (or =* or whatever, since they would require diff num2 starting values to work). the first value of reduce just defaults to the first thing in the array.
-                        //     switch (target) {
-                        //         case '+':                            
-                        //             return current + total;
-                        //             break;
-                        //         case '-':
-                        //             return current - total;
-                        //             break;
-                        //         case 'x':
-                        //             return current * total;
-                        //             break;
-                        //         case '/':
-                        //             return current / total;
-                        //             break;
-                        //     };
-                        // });
-
-                        // display.textContent = num2;
-
-                        // DOESN'T WORK WHEN DOING DIFF OPERATIONS IN SUCCESSION
-                        // ADD A CLICK COUNTER FOR WHEN USER CLICKS AN OPERATOR?
-                        // IF CLICK >= 1 TIME, SET NUM2, THEN OUTPUT RESULT OF NUM1 PLUS, MINUS, ETC NUM2?
 
                         userNums = [];              // Make userNums empty array everywhere again.
                         break;
                     case 'equal': 
                         userNums = [];
+                        num2 = userInput;
 
                         display.textContent = operate(num1, num2, operator);
 
@@ -143,8 +121,8 @@
                     case 'clear':
                         num1 = 0;
                         num2 = 0;
+                        userNums = [];
                         display.textContent = '0';
-                        // clear doesn't work right, don't want to initialize to 0
                 };
             });
         });
