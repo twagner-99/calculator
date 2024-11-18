@@ -26,36 +26,36 @@
 
 
     <script>
-        function add(num1, num2) {
-            return num1 + num2;
-        }
+        // function add(num1, num2) {
+        //     return num1 + num2;
+        // }
 
-        function subtract(num1, num2) {
-            return num1 - num2;
-        }
+        // function subtract(num1, num2) {
+        //     return num1 - num2;
+        // }
 
-        function multiply(num1, num2) {
-            return num1 * num2;
-        }
+        // function multiply(num1, num2) {
+        //     return num1 * num2;
+        // }
 
-        function divide(num1, num2) {
-            return num1 / num2;
-        }
+        // function divide(num1, num2) {
+        //     return num1 / num2;
+        // }
 
-        function operate(num1, num2, operator) {
+        function operate(num1, num2, operator) {    // why not just do return num1 + num2 directly in operate function?
             switch(operator) {
                 case '+':
-                    return add(num1, num2);
+                    return num1 + num2;
                     break;
                 case '-':
-                    return subtract(num1, num2);
+                    return num1 - num2;
                     break;
                 case '*':
                 case 'x':
-                    return multiply(num1, num2);
+                    return num1 * num2;
                     break;
                 case '/':
-                    return divide(num1, num2);
+                    return num1 / num2;
                     break;
                 // Add default case? //
             }
@@ -69,6 +69,9 @@
         let num1;   // Creating variables for all of these then overwriting their values within the if statements so they can be seen anywhere in the code.
         let num2;
         let operator;
+        let operatorCount = 0;
+        let userInput;
+        let operatorPrev;
 
         buttons.forEach((btn) => {
             btn.addEventListener("click", (e) => {
@@ -78,37 +81,58 @@
                 switch (targetType) {
                     case 'num':
                         userNums.push(target);
-                        display.textContent = +userNums.join(''); // Display joined number as user clicks nums. Does not save into a variable yet, though. Do this during operator step. Otherwise we wouldn't be able to delineate between num1 creation and num2 creation.
-                        num1 = +userNums.join('');  // Notice it's num1 =, not let num1 =. We are overwriting its value so it can be seen everywhere. // Unary + converts num1 from string to number
-                        console.log('num1 =' + num1);
+                        userInput = +userNums.join('');
+                        display.textContent = userInput;
                         break;
                     case 'operator':
                         operator = e.target.innerText;
-                        display.textContent = operator;
+                        operatorCount++;
 
-                        userNumsJoined.push(num1);
-                        console.log('userNumsJoined = ' + userNumsJoined);
+                        if (operatorCount > 1) {
+                            num2 = userInput;
+                            let result = operate(num1, num2, operatorPrev);
+                            display.textContent = result;
+                            num1 = result;
+                            operatorPrev = operator;
+                        }
 
-                        num2 = userNumsJoined.reduce((total, current) => {  // using reduce got around the issue of initializing a value for each operator when trying to use num2 =+ num1 (or =* or whatever, since they would require diff num2 starting values to work). the first value of reduce just defaults to the first thing in the array.
-                            switch (target) {
-                                case '+':                            
-                                    return total + current;
-                                    break;
-                                case '-':
-                                    return total - current;
-                                    break;
-                                case 'x':
-                                    return total * current;
-                                case '/':
-                                    return total / current;
-                                    break;
-                            }
-                        });
+                        else {
+                            num1 = userInput // Notice it's num1 =, not let num1 =. We are overwriting its value so it can be seen everywhere. // Unary + converts num1 from string to number
+                            display.textContent = num1;
+                            operatorPrev = operator;
+                        }
 
-                        console.log('num2 after operator = ' + num2);
+                        console.log('num1 =' + num1);
+                        console.log('num2 =' + num2);
+                        // userNumsJoined.push(num1);
+                        // console.log('userNumsJoined = ' + userNumsJoined);
+
+                        // num2 = userNumsJoined.reduce((total, current) => {  // using reduce got around the issue of initializing a value for each operator when trying to use num2 =+ num1 (or =* or whatever, since they would require diff num2 starting values to work). the first value of reduce just defaults to the first thing in the array.
+                        //     switch (target) {
+                        //         case '+':                            
+                        //             return current + total;
+                        //             break;
+                        //         case '-':
+                        //             return current - total;
+                        //             break;
+                        //         case 'x':
+                        //             return current * total;
+                        //             break;
+                        //         case '/':
+                        //             return current / total;
+                        //             break;
+                        //     };
+                        // });
+
+                        // display.textContent = num2;
+
+                        // DOESN'T WORK WHEN DOING DIFF OPERATIONS IN SUCCESSION
+                        // ADD A CLICK COUNTER FOR WHEN USER CLICKS AN OPERATOR?
+                        // IF CLICK >= 1 TIME, SET NUM2, THEN OUTPUT RESULT OF NUM1 PLUS, MINUS, ETC NUM2?
+
                         userNums = [];              // Make userNums empty array everywhere again.
                         break;
-                    case 'equal':
+                    case 'equal': 
                         userNums = [];
 
                         display.textContent = operate(num1, num2, operator);
