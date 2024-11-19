@@ -27,23 +27,7 @@
 
 
     <script>
-        // function add(num1, num2) {
-        //     return num1 + num2;
-        // }
-
-        // function subtract(num1, num2) {
-        //     return num1 - num2;
-        // }
-
-        // function multiply(num1, num2) {
-        //     return num1 * num2;
-        // }
-
-        // function divide(num1, num2) {
-        //     return num1 / num2;
-        // }
-
-        function operate(num1, num2, operator) {    // why not just do return num1 + num2 directly in operate function?
+        function operate(num1, num2, operator) {
             switch(operator) {
                 case '+':
                     return num1 + num2;
@@ -63,18 +47,18 @@
                         return num1 / num2;
                     }
                     break;
-            }
-        }
+            };
+        };
 
         const buttons = document.querySelectorAll('button');
         const display = document.querySelector('#display');
 
         // I THINK HAVING ALL THESE GLOBAL VARIABLES IS BAD PRACTICE. TRY TO CLEAN THIS UP. I THINK THEY SHOULD LIVE WITHIN FUNCTIONS?
 
-        let userNums = []; // Initializations are outside of event listener otherwise it gets overwritten each click.
-        let userNumsJoined = [];
-        let num1;   // Creating variables for all of these then overwriting their values within the if statements so they can be seen anywhere in the code.
-        let num2;
+        let userNums = [];          // Creating variables for all of these
+        let userNumsJoined = [];    // in global scopt then overwriting their
+        let num1;                   // values within the if statements so
+        let num2;                   // they can be seen anywhere in the code.
         let operator;
         let operatorCount = 0;
         let userInput;
@@ -96,7 +80,7 @@
                         operatorCount++;
 
                         if (operatorCount > 1) {
-                            num2 = +userInput;  // Notice it's num2 =, not let num2 =. We are overwriting its value so it can be seen everywhere. // Unary + converts num1 from string to number
+                            num2 = +userInput;
                             let result = operate(num1, num2, operatorPrev);
 
                             if (typeof result === 'number') {
@@ -112,10 +96,6 @@
                         }
 
                         else {
-                            // num1 = +userInput               
-                            // display.textContent = num1;
-                            // operatorPrev = operator;
-
                             if (!userNums.length) {             // Calc still works if user presses an 
                                 num1 = 0                        // operator before any numbers. Just uses 
                                 display.textContent = num1;     // 0 as starting value. Same behavior as
@@ -132,22 +112,18 @@
                         userNums = [];                          // Reset userNums array so more num1 
                         break;                                  // and num2 can be created.
                     case 'equal': 
-                        if (typeof num1 === 'undefined') {      // Clear if equal is pressed before nums or operator
-                             if (userNums.length) {             // NEED FIX IF USER PRESSES EQUAL OVER AND OVER
-                                display.textContent = userInput;
+                        if (typeof num1 === 'undefined') {          // Allows user to press equal before 
+                             if (userNums.length) {                 // nums or an operator and allows for 
+                                display.textContent = userInput;    // multiple equal clicks in a row.
                              }
 
                              else {
                                 display.textContent = 0;
                              }
-                            
-                            // let clearBtn = document.querySelector('#clear'); // want nothing to happen not to clear.
-                            //     let clickEvent = new Event('click');
-                            //     clearBtn.dispatchEvent(clickEvent);
-                            }    
+                        }    
                         
-                        else {                              // If user did press nums or an operator first, assign a num2 and get a result.
-                            userNums = [];
+                        else {                                  // Once we have a num1 defined, create num2
+                            userNums = [];                      // and run operate function.
                             num2 = +userInput;
 
                             let equalResult = operate(num1, num2, operator);
@@ -156,9 +132,9 @@
                                 display.textContent = Math.round(equalResult * 100000) / 100000;
                             }
 
-                            else {  // Allows for snarky error message to show if user divides by 0 because the error message is a string.
-                                display.textContent = equalResult;
-                            }
+                            else {                                  // Allows for snarky error message to show
+                                display.textContent = equalResult;  // if user divides by 0 because the error
+                            }                                       // message is a string.
                         }
                         break;
                     case 'clear':
