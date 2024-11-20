@@ -63,15 +63,19 @@
         let operatorCount = 0;
         let userInput;
         let operatorPrev;
+        let operatorCheckArray = [];
 
         buttons.forEach((btn) => {
             btn.addEventListener("click", (e) => {
                 let target = e.target.innerText;
                 let targetType = e.target.id;
 
-                switch (targetType) {
-                    case 'num':
-                        userNums.push(target);
+                operatorCheckArray.unshift(targetType); // Adds targetType to beginning of array on each click. 
+                console.log(operatorCheckArray);        // My solution to see if operators have been clicked
+                                                        // twice in a row. I used unshift instead of push to 
+                switch (targetType) {                   // make the comparison easier. This way I don't have to 
+                    case 'num':                         // calculate where the end of the array is. I know I'm
+                        userNums.push(target);          // always comparing the first two values at [0] and [1]
                         userInput = userNums.join('');
                         display.textContent = userInput;
                         break;
@@ -80,19 +84,25 @@
                         operatorCount++;
 
                         if (operatorCount > 1) {
-                            num2 = +userInput;
-                            let result = operate(num1, num2, operatorPrev);
-
-                            if (typeof result === 'number') {
-                                display.textContent = Math.round(result * 100000) / 100000;
+                            if (operatorCheckArray[0] === operatorCheckArray[1]) {
+                                operatorPrev = operator;
                             }
-
+                            
                             else {
-                                display.textContent = result;
-                            }
+                                num2 = +userInput;
+                                let result = operate(num1, num2, operatorPrev);
 
-                            num1 = result;
-                            operatorPrev = operator;
+                                if (typeof result === 'number') {
+                                    display.textContent = Math.round(result * 100000) / 100000;
+                                }
+
+                                else {
+                                    display.textContent = result;
+                                }
+
+                                num1 = result;
+                                operatorPrev = operator;
+                            }
                         }
 
                         else {
@@ -142,7 +152,8 @@
                         num2 = undefined;
                         userNums = [];
                         operatorCount = 0;
-                        display.textContent = '0'; 
+                        operatorCheckArray = [];
+                        display.textContent = '0';
                 };
             });
         });
@@ -151,6 +162,8 @@
         // If statement?
         // Right now, do not have capability to overwrite one operator with another
         // But, my calc has the same behavior as the CALC YA LATER example in TOP.
+    // I ADDED THIS CAPABILITY USING AN ARRAY OF TARGETTYPES SO I CAN CHECK IF
+    // TWO OPERATORS HAVE BEEN CLICKED IN A ROW.
 
     </script>
 </body>
