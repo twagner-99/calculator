@@ -6,24 +6,24 @@
     <title>Calculator</title>
 </head>
 <body>
-    <div id="display">0</div>
-    <button id="num">0</button>
-    <button id="num">1</button>
-    <button id="num">2</button>
-    <button id="num">3</button>
-    <button id="num">4</button>
-    <button id="num">5</button>
-    <button id="num">6</button>
-    <button id="num">7</button>
-    <button id="num">8</button>
-    <button id="num">9</button>
-    <button id="num">.</button>
-    <button id="operator">+</button>
-    <button id="operator">-</button>
-    <button id="operator">x</button>
-    <button id="operator">/</button>
-    <button id="equal">=</button>
-    <button id="clear">clear</button>
+    <div class="display">0</div>
+    <button class="num">0</button>
+    <button class="num">1</button>
+    <button class="num">2</button>
+    <button class="num">3</button>
+    <button class="num">4</button>
+    <button class="num">5</button>
+    <button class="num">6</button>
+    <button class="num">7</button>
+    <button class="num">8</button>
+    <button class="num">9</button>
+    <button class="num" id="decimal">.</button>
+    <button class="operator">+</button>
+    <button class="operator">-</button>
+    <button class="operator">x</button>
+    <button class="operator">/</button>
+    <button class="equal">=</button>
+    <button class="clear">clear</button>
 
 
     <script>
@@ -51,7 +51,7 @@
         };
 
         const buttons = document.querySelectorAll('button');
-        const display = document.querySelector('#display');
+        const display = document.querySelector('.display');
 
         // I THINK HAVING ALL THESE GLOBAL VARIABLES IS BAD PRACTICE. TRY TO CLEAN THIS UP. I THINK THEY SHOULD LIVE WITHIN FUNCTIONS?
 
@@ -68,7 +68,9 @@
         buttons.forEach((btn) => {
             btn.addEventListener("click", (e) => {
                 let target = e.target.innerText;
-                let targetType = e.target.id;
+                let targetType = e.target.className;
+
+                let decimalBtn = document.querySelector('#decimal');
 
                 operatorCheckArray.unshift(targetType); // Adds targetType to beginning of array on each click. 
                 console.log(operatorCheckArray);        // My solution to see if operators have been clicked
@@ -78,15 +80,23 @@
                         userNums.push(target);          // always comparing the first two values at [0] and [1]
                         userInput = userNums.join('');
                         display.textContent = userInput;
+
+                        if (userNums.includes('.')) {       // If there's already a decimal in userNums, disable
+                            decimalBtn.disabled = true;     // disable decimal button moving forward.
+                        }   
+
+                        else {                              // If there's no decimal in userNums, keep decimal
+                            decimalBtn.disabled = false;    // button clickable.
+                        }
                         break;
                     case 'operator':
                         operator = e.target.innerText;
                         operatorCount++;
 
                         if (operatorCount > 1) {
-                            if (operatorCheckArray[0] === operatorCheckArray[1]) {
-                                operatorPrev = operator;
-                            }
+                            if (operatorCheckArray[0] === operatorCheckArray[1]) {  // If operators were
+                                operatorPrev = operator;                            // clicked in succession
+                            }                                                       // overwrite the old one
                             
                             else {
                                 num2 = +userInput;
@@ -164,6 +174,30 @@
         // But, my calc has the same behavior as the CALC YA LATER example in TOP.
     // I ADDED THIS CAPABILITY USING AN ARRAY OF TARGETTYPES SO I CAN CHECK IF
     // TWO OPERATORS HAVE BEEN CLICKED IN A ROW.
+
+// 11/20 tasks
+    // See about changing up the behavior of having equal pressed multiple times in a row
+    // Maybe can resuse operatorCheckArray to make it cleaner - Doesn't make sense to do this
+            // here because we also need to handle the case of just clicking equal once before
+            // num1 is defined, not just if it's being clicked twice.
+    // Implement the extra credit
+
+// Future tasks
+    // Make it pretty
+    // Once I'm totally done, go back and try to get rid of all the global variables and 
+            // put them into functions
+    // CAN I REWRITE THIS WHOLE THING BY JUST CREATING A LONG ASS ARRAY AND THEN USING
+        // IF STATEMENTS? IF A NUMBER STRING TOGETHER, IF AN OPERATOR, RUN THE 
+        // FUNCTION? 
+            // OR COULD I USE OBJECTS WITH NUM1, NUM2, AND OPERATOR KEYS?
+            // THEN MY FUNCTION COULD JUST BE ACCESSING THOSE?
+            // obj.num + obj.operator + obj.num2  ----- would that work to make like 2 / 9 ?????
+                // if target type = num make it num1 if num1 undefined on operator or equal click
+                // if target type = num make it num2 if num2 undefined operator or equal click
+                // if target type = operator make it operator if operator undefined
+                    // If they click it twice, handle like I already am with an array counter
+                // once num1, num  NAHH IDK YOU STILL RUN N=INTO THE SAME CHICKEN OR EGG THING
+            // 
 
     </script>
 </body>
