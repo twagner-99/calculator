@@ -24,6 +24,7 @@
     <button class="operator">/</button>
     <button class="equal">=</button>
     <button class="clear">clear</button>
+    <button class="backspace">backspace</button>
 
 
     <script>
@@ -79,7 +80,6 @@
                     case 'num':                         // calculate where the end of the array is. I know I'm
                         userNums.push(target);          // always comparing the first two values at [0] and [1]
                         userInput = userNums.join('');
-                        display.textContent = userInput;
 
                         if (userNums.includes('.')) {       // If there's already a decimal in userNums, disable
                             decimalBtn.disabled = true;     // disable decimal button moving forward.
@@ -87,6 +87,14 @@
 
                         else {                              // If there's no decimal in userNums, keep decimal
                             decimalBtn.disabled = false;    // button clickable.
+                        }
+
+                        if (userNums[0] === '.') {                  // If user inputs a decimal as start of a
+                            display.textContent = '0' + userInput;  // number, make the display have leading zero
+                        }
+
+                        else {
+                            display.textContent = userInput;
                         }
                         break;
                     case 'operator':
@@ -164,6 +172,12 @@
                         operatorCount = 0;
                         operatorCheckArray = [];
                         display.textContent = '0';
+                        break;
+                    case 'backspace':
+                        userNums.pop();
+                        userInput = userNums.join('');
+                        display.textContent = userInput;
+                        break;
                 };
             });
         });
