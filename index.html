@@ -7,21 +7,21 @@
 </head>
 <body>
     <div class="display">0</div>
-    <button class="num">0</button>
-    <button class="num">1</button>
-    <button class="num">2</button>
-    <button class="num">3</button>
-    <button class="num">4</button>
-    <button class="num">5</button>
-    <button class="num">6</button>
-    <button class="num">7</button>
-    <button class="num">8</button>
-    <button class="num">9</button>
+    <button class="num" id="0">0</button>
+    <button class="num" id="1">1</button>
+    <button class="num" id="2">2</button>
+    <button class="num" id="3">3</button>
+    <button class="num" id="4">4</button>
+    <button class="num" id="5">5</button>
+    <button class="num" id="6">6</button>
+    <button class="num" id="7">7</button>
+    <button class="num" id="8">8</button>
+    <button class="num" id="9">9</button>
     <button class="num" id="decimal">.</button>
-    <button class="operator">+</button>
-    <button class="operator">-</button>
-    <button class="operator">x</button>
-    <button class="operator">/</button>
+    <button class="operator" id="+">+</button>
+    <button class="operator" id="-">-</button>
+    <button class="operator" id="*">x</button>
+    <button class="operator" id="/">/</button>
     <button class="equal">=</button>
     <button class="clear">clear</button>
     <button class="backspace">backspace</button>
@@ -182,12 +182,43 @@
             });
         });
 
-// What happens if they press operators in a row? Overwrite somehow?
-        // If statement?
-        // Right now, do not have capability to overwrite one operator with another
-        // But, my calc has the same behavior as the CALC YA LATER example in TOP.
-    // I ADDED THIS CAPABILITY USING AN ARRAY OF TARGETTYPES SO I CAN CHECK IF
-    // TWO OPERATORS HAVE BEEN CLICKED IN A ROW.
+        document.addEventListener('keydown', (e) => {
+            let allowedValues = '.0123456789+-*x/';
+            let keyTarget = e.key;
+
+            let clickEvent = new Event('click');
+
+            console.log(e.key);
+            console.log(typeof e.key);
+
+            if (allowedValues.includes(e.key)) {
+                if (keyTarget === 'x') {
+                    keyTarget = '*';
+                }
+
+                if (keyTarget === '.') {
+                    keyTarget = 'decimal';
+                }
+
+                document.querySelector(`[id="${keyTarget}"]`).dispatchEvent(clickEvent);
+            }
+
+            if (keyTarget === '=' || keyTarget === 'Enter') {
+                document.querySelector('.equal').dispatchEvent(clickEvent);
+            }
+
+            if (keyTarget === 'Delete' || keyTarget === 'Backspace') {
+                document.querySelector('.backspace').dispatchEvent(clickEvent);
+            }
+        });
+
+// If anything but number or operator, don't do anything
+// I know I can get this to work in a not pretty way...
+        // If a key is clicked, see what it is, and dispatch a click onto the right button
+        // Or I could pretty much copy/paste all the code above into a keydown event listener.
+            // Might cause issues if user is going back and forth between keyboard and clicks?
+
+
 
 // 11/20 tasks
     // See about changing up the behavior of having equal pressed multiple times in a row
@@ -211,7 +242,12 @@
                 // if target type = operator make it operator if operator undefined
                     // If they click it twice, handle like I already am with an array counter
                 // once num1, num  NAHH IDK YOU STILL RUN N=INTO THE SAME CHICKEN OR EGG THING
-            // 
+    
+// BUGS TO FIX
+    // When clicking backspace in the middle of a operation, need to disable it
+    // also if you delete delete all the nums, display is empty need to fix
+    // Divide by zero, hit clear, then do another division operation and it always 
+        // equals zero. Need to fix
 
     </script>
 </body>
