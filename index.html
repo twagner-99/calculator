@@ -51,6 +51,15 @@
             };
         };
 
+        // function clear() {
+        //     num1 = undefined;
+        //     num2 = undefined;
+        //     userNums = [];
+        //     operatorCount = 0;
+        //     operatorCheckArray = [];
+        //     display.textContent = '0';
+        // }
+
         const buttons = document.querySelectorAll('button');
         const display = document.querySelector('.display');
 
@@ -166,12 +175,14 @@
                         }
                         break;
                     case 'clear':
+                        // clear();
                         num1 = undefined;
                         num2 = undefined;
                         userNums = [];
                         operatorCount = 0;
                         operatorCheckArray = [];
                         display.textContent = '0';
+
                         break;
                     case 'backspace':
                         userNums.pop();
@@ -203,7 +214,12 @@
                 document.querySelector(`[id="${keyTarget}"]`).dispatchEvent(clickEvent);
             }
 
-            if (keyTarget === '=' || keyTarget === 'Enter') {
+            if (keyTarget === '=') {
+                document.querySelector('.equal').dispatchEvent(clickEvent);
+            }
+
+            if (keyTarget === 'Enter') {
+                e.preventDefault();
                 document.querySelector('.equal').dispatchEvent(clickEvent);
             }
 
@@ -211,21 +227,6 @@
                 document.querySelector('.backspace').dispatchEvent(clickEvent);
             }
         });
-
-// If anything but number or operator, don't do anything
-// I know I can get this to work in a not pretty way...
-        // If a key is clicked, see what it is, and dispatch a click onto the right button
-        // Or I could pretty much copy/paste all the code above into a keydown event listener.
-            // Might cause issues if user is going back and forth between keyboard and clicks?
-
-
-
-// 11/20 tasks
-    // See about changing up the behavior of having equal pressed multiple times in a row
-    // Maybe can resuse operatorCheckArray to make it cleaner - Doesn't make sense to do this
-            // here because we also need to handle the case of just clicking equal once before
-            // num1 is defined, not just if it's being clicked twice.
-    // Implement the extra credit
 
 // Future tasks
     // Make it pretty
@@ -247,7 +248,12 @@
     // When clicking backspace in the middle of a operation, need to disable it
     // also if you delete delete all the nums, display is empty need to fix
     // Divide by zero, hit clear, then do another division operation and it always 
-        // equals zero. Need to fix
+        // equals zero. Need to fix - FIXED, THIS WAS ACTUALLY THE SAME BUG AS BELOW
+    // 12- 90 = -78 using keyboard and enter. but then do it again and it = 0. But works with clicks
+        // it's automatically clearing afterwards, but only with keyboard. Can tell from operatorCheckArray
+        // Doesn't do it when adding breakpoints....
+        // Works when clicking =, but not enter - FIXED USING PREVENTDEFAULT()
+    
 
     </script>
 </body>
