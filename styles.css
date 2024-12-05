@@ -9,27 +9,20 @@
     flex-direction: column;
 }
 
-.calc-btns {
-    display: flex;
-}
-
-.nums-clr-bckspc {
-    display: flex;
-    flex-direction: column;
-}
-
+.calc-btns,
 .clr-bckspc {
     display: flex;
+}
+
+.nums-clr-bckspc,
+.operator-btns {
+    display: flex;
+    flex-direction: column;
 }
 
 .num-btns {
     display: flex;
     flex-wrap: wrap;
-}
-
-.operator-btns {
-    display: flex;
-    flex-direction: column;
 }
 
 .clear,
@@ -54,3 +47,5 @@
 [id='0'] {
     flex-grow: 1;
 }
+
+/* NEED TO FIGURE OUT HOW TO GET DISPLAY FONT TO BE BIG */
