@@ -51,6 +51,16 @@
             };
         };
 
+        function clear() {
+            num1 = undefined;
+            num2 = undefined;
+            userInput = undefined;
+            userNums = [];
+            operatorCount = 0;
+            operatorCheckArray = [];
+            display.textContent = '0';
+        }
+
         const buttons = document.querySelectorAll('button');
         const display = document.querySelector('.display');
 
@@ -74,7 +84,7 @@
                 let decimalBtn = document.querySelector('#decimal');
 
                 operatorCheckArray.unshift(targetType); // Adds targetType to beginning of array on each click. 
-                console.log(operatorCheckArray);        // My solution to see if operators have been clicked
+                // console.log(operatorCheckArray);     // My solution to see if operators have been clicked
                                                         // twice in a row. I used unshift instead of push to 
                 switch (targetType) {                   // make the comparison easier. This way I don't have to 
                     case 'num':                         // calculate where the end of the array is. I know I'm
@@ -104,12 +114,12 @@
                         if (operatorCount > 1) {
                             if (operatorCheckArray[0] === operatorCheckArray[1]) {  // If operators were
                                 operatorPrev = operator;                            // clicked in succession
-                            }                                                       // overwrite the old one
-                            
-                            else {
-                                num2 = +userInput;
-                                let result = operate(num1, num2, operatorPrev);
-
+                            }                                                       // overwrite the old one.
+                                                                                    // Also could have written
+                            else {                                                  // operatorCheckArray[1] === 'operator'
+                                num2 = +userInput;                                  // b/c we know operatorCheckArray[0]
+                                let result = operate(num1, num2, operatorPrev);     // has to be 'operator' b/c that's
+                                                                                    // the case we're under.
                                 if (typeof result === 'number') {
                                     display.textContent = Math.round(result * 100000) / 100000;
                                 }
@@ -166,13 +176,7 @@
                         }
                         break;
                     case 'clear':
-                        num1 = undefined;
-                        num2 = undefined;
-                        userNums = [];
-                        operatorCount = 0;
-                        operatorCheckArray = [];
-                        display.textContent = '0';
-
+                        clear();
                         break;
                     case 'backspace':
                         if (userNums.length) {
@@ -184,6 +188,11 @@
                         if (!userNums.length) {             // Using another if instead of an if ...else
                             display.textContent = '0';      // so both conditions are checked everytime
                         }                                   // instead of one or the other
+
+                        if (operatorCheckArray[1] === 'equal' || operatorCheckArray[1] === 'operator') {
+                            clear();
+                        }
+
                         break;
                 };
             });
@@ -194,9 +203,6 @@
             let keyTarget = e.key;
 
             let clickEvent = new Event('click');
-
-            console.log(e.key);
-            console.log(typeof e.key);
 
             if (allowedValues.includes(e.key)) {
                 if (keyTarget === 'x') {
@@ -226,11 +232,14 @@
 
 // Future tasks
     // Make it pretty
+    // Add remainder option?
+    // Add toggle between positve and negative option?
     // Once I'm totally done, go back and try to get rid of all the global variables and 
             // put them into functions
     
 // BUGS TO FIX
-    // When clicking backspace in the middle of a operation, need to disable it
+    // When clicking backspace in the middle of a operation, need to disable it - DIDN'T END UP DISABLING. IF
+        // USER BACKSPACES AFTER EQUAL OR OPERATOR, JUST CLEARS EVERYTHING LIKE IF YOU WERE HITTING CLEAR BUTTON
     // also if you delete delete all the nums, display is empty need to fix - FIXED
     // Divide by zero, hit clear, then do another division operation and it always 
         // equals zero. Need to fix - FIXED, THIS WAS ACTUALLY THE SAME BUG AS BELOW
