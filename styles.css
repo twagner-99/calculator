@@ -1,0 +1,56 @@
+
+* {
+    font-size: large;
+}
+.calc-body {
+    width: 350px;
+    height: 700px;
+    display: flex;
+    flex-direction: column;
+}
+
+.calc-btns {
+    display: flex;
+}
+
+.nums-clr-bckspc {
+    display: flex;
+    flex-direction: column;
+}
+
+.clr-bckspc {
+    display: flex;
+}
+
+.num-btns {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.operator-btns {
+    display: flex;
+    flex-direction: column;
+}
+
+.clear,
+.backspace {
+    flex-grow: 1;
+    flex-basis: 0;
+}
+
+.num,
+.operator,
+.equal {
+    width: 87.5px;
+    height: 87.5px;
+}
+
+.display,
+.clear,
+.backspace {
+    height: 87.5px;
+}
+
+[id='0'] {
+    flex-grow: 1;
+}

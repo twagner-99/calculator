@@ -3,29 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
     <title>Calculator</title>
 </head>
 <body>
-    <div class="display">0</div>
-    <button class="num" id="0">0</button>
-    <button class="num" id="1">1</button>
-    <button class="num" id="2">2</button>
-    <button class="num" id="3">3</button>
-    <button class="num" id="4">4</button>
-    <button class="num" id="5">5</button>
-    <button class="num" id="6">6</button>
-    <button class="num" id="7">7</button>
-    <button class="num" id="8">8</button>
-    <button class="num" id="9">9</button>
-    <button class="num" id="decimal">.</button>
-    <button class="operator" id="+">+</button>
-    <button class="operator" id="-">-</button>
-    <button class="operator" id="*">x</button>
-    <button class="operator" id="/">/</button>
-    <button class="equal">=</button>
-    <button class="clear">clear</button>
-    <button class="backspace">backspace</button>
-
+    <div class="calc-body">
+        <div class="display">0</div>
+        <div class="calc-btns">
+            <div class="nums-clr-bckspc">
+                <div class="clr-bckspc">
+                    <button class="clear">clear</button>
+                    <button class="backspace">backspace</button>
+                </div>
+                <div class="num-btns">
+                    <button class="num" id="7">7</button>
+                    <button class="num" id="8">8</button>
+                    <button class="num" id="9">9</button>
+                    <button class="num" id="4">4</button>
+                    <button class="num" id="5">5</button>
+                    <button class="num" id="6">6</button>
+                    <button class="num" id="1">1</button>
+                    <button class="num" id="2">2</button>
+                    <button class="num" id="3">3</button>
+                    <button class="num" id="0">0</button>
+                    <button class="num" id="decimal">.</button>
+                </div>
+            </div>
+            <div class="operator-btns">
+                <button class="operator" id="+">+</button>
+                <button class="operator" id="-">-</button>
+                <button class="operator" id="*">x</button>
+                <button class="operator" id="/">/</button>
+                <button class="equal">=</button>
+            </div>
+        </div>
+    </div>
 
     <script>
         function operate(num1, num2, operator) {
